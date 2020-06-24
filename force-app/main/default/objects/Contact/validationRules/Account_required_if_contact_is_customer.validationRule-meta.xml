@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_required_if_contact_is_customer</fullName>
+    <active>true</active>
+    <description>Account field is required if the contact is customer.</description>
+    <errorConditionFormula>AND(IsCustomer__c, AccountId = null)</errorConditionFormula>
+    <errorDisplayField>AccountId</errorDisplayField>
+    <errorMessage>Account field is required if the contact is customer.</errorMessage>
+</ValidationRule>
