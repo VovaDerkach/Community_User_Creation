@@ -1,5 +1,4 @@
 public with sharing class ContactService {
-
     private List<Contact> records;
 
     public ContactService() {

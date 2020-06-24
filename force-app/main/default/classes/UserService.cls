@@ -60,7 +60,17 @@ public with sharing class UserService {
         return result;
     }
 
-    @future
+    public static void upsertActiveCustomerUsers(Set<Id> contactIds) {
+        Integer userCount = [SELECT Count() FROM User WHERE Contact.Id IN :contactIds AND IsActive = FALSE LIMIT 50000];
+
+        if (userCount == 0) {
+            createCommunityUsersForCustomerContacts(contactIds);
+        } else {
+            activateCustomerUsers(contactIds);
+        }
+    }
+
+    @Future
     public static void deactivateNonCustomerUsers(Set<Id> contactIds) {
         List<User> users = [SELECT Id FROM User WHERE Contact.Id IN :contactIds AND IsActive = TRUE LIMIT 50000];
 
@@ -71,7 +81,7 @@ public with sharing class UserService {
         update users;
     }
 
-    @future
+    @Future
     public static void activateCustomerUsers(Set<Id> contactIds) {
         List<User> users = [SELECT Id FROM User WHERE Contact.Id IN :contactIds AND IsActive = FALSE LIMIT 50000];
 
