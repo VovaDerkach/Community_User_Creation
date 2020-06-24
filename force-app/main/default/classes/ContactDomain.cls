@@ -20,6 +20,6 @@ public with sharing class ContactDomain extends Domain {
         UserService.deactivateNonCustomerUsers(nonCustomerContactIds);
 
         Set<Id> customerContactIds = new Map<Id, Contact>(contactService.getNewCustomerContacts((Map<Id, Contact>) Trigger.oldMap)).keySet();
-        UserService.activateCustomerUsers(customerContactIds);
+        UserService.upsertActiveCustomerUsers(customerContactIds);
     }
 }
